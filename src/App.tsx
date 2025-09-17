@@ -110,12 +110,13 @@ export default function UnderConstruction() {
             <button className="px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl hover:from-purple-600 hover:to-blue-600 transition-all duration-300 font-medium shadow-lg">
               Notify Me
             </button>
+            <br/><br/>
           </div>
         </div>
       </div>
 
       {/* Footer */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-gray-500 text-sm">
+      <div className="fixed bottom-4 right-4 text-gray-500 text-sm z-20">
         © 2025 ElanDrive Labs. All rights reserved.
       </div>
     </div>
