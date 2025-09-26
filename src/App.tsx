@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Wrench, Mail, MapPin, Phone } from 'lucide-react';
 
-export default function UnderConstruction() {
+function App() {
   const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
@@ -9,116 +9,366 @@ export default function UnderConstruction() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-4">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-sky-500/10 rounded-full blur-3xl animate-pulse delay-2000"></div>
+    <>
+      <style>{`
+        body {
+          margin: 0;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        .hero-bg {
+          min-height: 100vh;
+          background: linear-gradient(135deg, #1a202c 0%, #2b4c7e 50%, #1a202c 100%);
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .bg-blob {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(60px);
+          opacity: 0.2;
+        }
+        
+        .blob-1 {
+          width: 300px;
+          height: 300px;
+          background: #3b82f6;
+          top: -150px;
+          right: -150px;
+          animation: pulse 3s ease-in-out infinite;
+        }
+        
+        .blob-2 {
+          width: 400px;
+          height: 400px;
+          background: #06b6d4;
+          bottom: -200px;
+          left: -200px;
+          animation: pulse 3s ease-in-out infinite 1s;
+        }
+        
+        .blob-3 {
+          width: 250px;
+          height: 250px;
+          background: #0ea5e9;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          animation: pulse 3s ease-in-out infinite 2s;
+        }
+        
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); opacity: 0.2; }
+          50% { transform: scale(1.1); opacity: 0.3; }
+        }
+        
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .animate-fade-in {
+          animation: fadeInUp 1s ease-out;
+        }
+        
+        .logo-container {
+          width: 80px;
+          height: 80px;
+          background: linear-gradient(135deg, #3b82f6, #06b6d4);
+          border-radius: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 2rem;
+          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .gradient-text {
+          background: linear-gradient(135deg, #60a5fa, #34d399);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        
+        .glass-card {
+          background: rgba(255, 255, 255, 0.05);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 16px;
+          transition: all 0.3s ease;
+          padding: 1.5rem;
+          margin-bottom: 1rem;
+        }
+        
+        .glass-card:hover {
+          background: rgba(255, 255, 255, 0.1);
+          transform: translateY(-2px);
+        }
+        
+        .progress-bar {
+          height: 8px;
+          background: #374151;
+          border-radius: 4px;
+          overflow: hidden;
+        }
+        
+        .progress-fill {
+          height: 100%;
+          background: linear-gradient(90deg, #3b82f6, #06b6d4);
+          width: 75%;
+          border-radius: 4px;
+          transition: width 2s ease-out;
+        }
+        
+        .feature-icon {
+          width: 48px;
+          height: 48px;
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 1rem;
+        }
+        
+        .icon-blue { background: rgba(59, 130, 246, 0.2); }
+        .icon-cyan { background: rgba(6, 182, 212, 0.2); }
+        .icon-sky { background: rgba(14, 165, 233, 0.2); }
+        
+        .pulsing-dot {
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .dot-blue { background: #60a5fa; }
+        .dot-cyan { background: #22d3ee; animation-delay: 0.3s; }
+        .dot-sky { background: #0ea5e9; animation-delay: 0.7s; }
+        
+        .btn-gradient {
+          background: linear-gradient(135deg, #3b82f6, #06b6d4);
+          border: none;
+          transition: all 0.3s ease;
+          color: white;
+          padding: 0.75rem 1.5rem;
+          border-radius: 0.75rem;
+          font-weight: 500;
+          cursor: pointer;
+        }
+        
+        .btn-gradient:hover {
+          background: linear-gradient(135deg, #2563eb, #0891b2);
+          transform: translateY(-1px);
+          box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
+        }
+        
+        .footer {
+          position: fixed;
+          bottom: 1rem;
+          right: 1rem;
+          z-index: 1000;
+        }
+        
+        .form-control-custom {
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          color: white;
+          padding: 0.75rem 1rem;
+          border-radius: 0.75rem;
+          flex: 1;
+        }
+        
+        .form-control-custom::placeholder {
+          color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .form-control-custom:focus {
+          background: rgba(255, 255, 255, 0.2);
+          border-color: #3b82f6;
+          outline: none;
+          box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+          color: white;
+        }
+        
+        .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 1rem;
+        }
+        
+        .row {
+          display: flex;
+          flex-wrap: wrap;
+          margin: -0.5rem;
+        }
+        
+        .col {
+          flex: 1;
+          padding: 0.5rem;
+          min-width: 300px;
+        }
+        
+        .text-center { text-align: center; }
+        .text-white { color: white; }
+        .text-light { color: #d1d5db; }
+        .d-flex { display: flex; }
+        .align-items-center { align-items: center; }
+        .justify-content-center { justify-content: center; }
+        .gap-2 { gap: 0.5rem; }
+        .mb-5 { margin-bottom: 3rem; }
+        .mb-4 { margin-bottom: 1.5rem; }
+        .mb-3 { margin-bottom: 1rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .me-2 { margin-right: 0.5rem; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+        .fw-bold { font-weight: 700; }
+        .fw-semibold { font-weight: 600; }
+        .fw-medium { font-weight: 500; }
+        .display-1 { font-size: 5rem; line-height: 1; }
+        .display-4 { font-size: 2.5rem; }
+        .lead { font-size: 1.25rem; line-height: 1.6; }
+        .small { font-size: 0.875rem; }
+        
+        @media (max-width: 768px) {
+          .display-1 { font-size: 3rem; }
+          .display-4 { font-size: 2rem; }
+          .row { flex-direction: column; }
+          .col { min-width: auto; }
+        }
+      `}</style>
+      
+      <div className="hero-bg d-flex align-items-center">
+        {/* Background blobs */}
+        <div className="bg-blob blob-1"></div>
+        <div className="bg-blob blob-2"></div>
+        <div className="bg-blob blob-3"></div>
+        
+        <div className="container" style={{position: 'relative', zIndex: 10}}>
+          <div className={`text-center ${animate ? 'animate-fade-in' : ''}`}>
+            
+            {/* Logo Section */}
+            <div className="mb-5">
+              <div className="logo-container">
+                <Wrench size={40} color="white" />
+              </div>
+              <h1 className="display-1 fw-bold text-white mb-4">
+                <span className="gradient-text">ElanDrive</span>
+                <span className="text-white"> Labs</span>
+              </h1>
+            </div>
+            
+            {/* Main Message */}
+            <div className="mb-5">
+              <h2 className="display-4 fw-semibold text-white mb-4">
+                Something Amazing is Coming Soon
+              </h2>
+              <p className="lead text-light mb-5 mx-auto" style={{maxWidth: '600px'}}>
+                We're working hard to bring you an innovative experience. Our team is crafting 
+                something special that will transform the way you think about technology.
+              </p>
+              
+              {/* Progress Bar */}
+              <div className="mx-auto mb-5" style={{maxWidth: '400px'}}>
+                <div className="d-flex justify-content-center mb-2" style={{justifyContent: 'space-between'}}>
+                  <small className="text-light">Progress</small>
+                  <small className="text-light">75%</small>
+                </div>
+                <div className="progress-bar">
+                  <div className="progress-fill"></div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Features */}
+            <div className="row mb-5">
+              <div className="col">
+                <div className="glass-card">
+                  <div className="feature-icon icon-blue">
+                    <div className="pulsing-dot dot-blue"></div>
+                  </div>
+                  <h5 className="text-white fw-semibold mb-2">Innovation</h5>
+                  <p className="text-light small mb-0">Cutting-edge solutions for tomorrow's challenges</p>
+                </div>
+              </div>
+              
+              <div className="col">
+                <div className="glass-card">
+                  <div className="feature-icon icon-cyan">
+                    <div className="pulsing-dot dot-cyan"></div>
+                  </div>
+                  <h5 className="text-white fw-semibold mb-2">Excellence</h5>
+                  <p className="text-light small mb-0">Commitment to quality and user experience</p>
+                </div>
+              </div>
+              
+              <div className="col">
+                <div className="glass-card">
+                  <div className="feature-icon icon-sky">
+                    <div className="pulsing-dot dot-sky"></div>
+                  </div>
+                  <h5 className="text-white fw-semibold mb-2">Future</h5>
+                  <p className="text-light small mb-0">Building the technology of tomorrow, today</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Contact Info */}
+            <div className="glass-card mb-5">
+              <h5 className="text-white fw-semibold mb-4">Get in Touch</h5>
+              <div className="row">
+                <div className="col">
+                  <div className="d-flex align-items-center justify-content-center text-light mb-3">
+                    <Mail size={20} className="me-2" style={{color: '#60a5fa'}} />
+                    <span>info@elandrivelabs.com</span>
+                  </div>
+                </div>
+                <div className="col">
+                  <div className="d-flex align-items-center justify-content-center text-light mb-3">
+                    <Phone size={20} className="me-2" style={{color: '#22d3ee'}} />
+                    <span>+1 (555) 123-4567</span>
+                  </div>
+                </div>
+                <div className="col">
+                  <div className="d-flex align-items-center justify-content-center text-light mb-3">
+                    <MapPin size={20} className="me-2" style={{color: '#0ea5e9'}} />
+                    <span>Montréal</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Newsletter Signup */}
+            <div className="mx-auto" style={{maxWidth: '400px'}}>
+              <p className="text-light mb-3">Be the first to know when we launch</p>
+              <div className="d-flex gap-2">
+                <input 
+                  type="email" 
+                  placeholder="Enter your email"
+                  className="form-control-custom"
+                />
+                <button className="btn-gradient">
+                  Notify Me
+                </button>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+        {/* Footer */}
+        <div className="footer">
+          <small style={{color: '#9ca3af'}}>© 2025 ElanDrive Labs. All rights reserved.</small>
+        </div>
       </div>
-
-      <div className={`relative z-10 text-center max-w-4xl mx-auto transition-all duration-1000 ${animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-        {/* Logo/Brand */}
-        <div className="mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl mb-6 shadow-2xl">
-            <Wrench className="w-10 h-10 text-white" />
-          </div>
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-              ElanDrive
-            </span>
-            <span className="text-white"> Labs</span>
-          </h1>
-        </div>
-
-        {/* Main Message */}
-        <div className="mb-12">
-          <h2 className="text-2xl md:text-4xl font-semibold text-white mb-6">
-            Something Amazing is Coming Soon
-          </h2>
-          <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
-            We're working hard to bring you an innovative experience. Our team is crafting something special that will transform the way you think about technology.
-          </p>
-          
-          {/* Progress indicator */}
-          <div className="max-w-md mx-auto mb-8">
-            <div className="flex justify-between text-sm text-gray-400 mb-2">
-              <span>Progress</span>
-              <span>75%</span>
-            </div>
-            <div className="w-full bg-gray-700 rounded-full h-2">
-              <div className="bg-gradient-to-r from-blue-500 to-cyan-500 h-2 rounded-full transition-all duration-2000 ease-out" style={{width: '75%'}}></div>
-            </div>
-          </div>
-        </div>
-
-        {/* Features Preview */}
-        <div className="grid md:grid-cols-3 gap-6 mb-12">
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300">
-            <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-4 mx-auto">
-              <div className="w-6 h-6 bg-purple-400 rounded-full animate-pulse"></div>
-            </div>
-            <h3 className="text-white font-semibold mb-2">Innovation</h3>
-            <p className="text-gray-400 text-sm">Cutting-edge solutions for tomorrow's challenges</p>
-          </div>
-          
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300">
-            <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-4 mx-auto">
-              <div className="w-6 h-6 bg-blue-400 rounded-full animate-pulse delay-300"></div>
-            </div>
-            <h3 className="text-white font-semibold mb-2">Excellence</h3>
-            <p className="text-gray-400 text-sm">Commitment to quality and user experience</p>
-          </div>
-          
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300">
-            <div className="w-12 h-12 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-4 mx-auto">
-              <div className="w-6 h-6 bg-indigo-400 rounded-full animate-pulse delay-700"></div>
-            </div>
-            <h3 className="text-white font-semibold mb-2">Future</h3>
-            <p className="text-gray-400 text-sm">Building the technology of tomorrow, today</p>
-          </div>
-        </div>
-
-        {/* Contact Info */}
-        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 mb-8">
-          <h3 className="text-xl font-semibold text-white mb-6">Get in Touch</h3>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="flex items-center justify-center md:justify-start text-gray-300">
-              <Mail className="w-5 h-5 mr-3 text-purple-400" />
-              <span>hello@elandrivelabs.com</span>
-            </div>
-            <div className="flex items-center justify-center md:justify-start text-gray-300">
-              <Phone className="w-5 h-5 mr-3 text-blue-400" />
-              <span>+1 (555) 123-4567</span>
-            </div>
-            <div className="flex items-center justify-center md:justify-start text-gray-300">
-              <MapPin className="w-5 h-5 mr-3 text-indigo-400" />
-              <span>Innovation Hub, Tech City</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Newsletter Signup */}
-        <div className="max-w-md mx-auto">
-          <p className="text-gray-300 mb-4">Be the first to know when we launch</p>
-          <div className="flex gap-2">
-            <input 
-              type="email" 
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-purple-400 focus:bg-white/20 transition-all duration-300"
-            />
-            <button className="px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl hover:from-purple-600 hover:to-blue-600 transition-all duration-300 font-medium shadow-lg">
-              Notify Me
-            </button>
-            <br/><br/>
-          </div>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <div className="fixed bottom-4 right-4 text-gray-500 text-sm z-20">
-        © 2025 ElanDrive Labs. All rights reserved.
-      </div>
-    </div>
+    </>
   );
 }
+
+export default App;
